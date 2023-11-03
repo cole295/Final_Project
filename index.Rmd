@@ -19,4 +19,194 @@ Another idea I had in mind for my research is to explore the effects unionizatio
 
 Does the level of healthcare spending in a country affect public health? In this study, I plan on examining the amount in which countries spend on healthcare as a percentage of their GDP, and to then compare their respective life expectancy. I hypothesize that the greater the percentage of GDP is spent on healthcare, the life expectancy would be higher. I expect that as there is greater spending on healthcare, there are larger investments in healthcare infrastructure and more funding for healthcare operations, which would  mean increased services for patients. Consequently, as patients enjoy a higher quality healthcare through larger investments, health problems would decline and would subsequently be reflected in life expectancy. My sample includes measures of healthcare spending from all countries between the years 2000 and 2020, as well as an additional sample on life expectancy by country in the same time period. The explanatory variable of interest is healthcare spending as a percentage of GDP, by country. If the variable were to be coded = 5.76, this means that 5.76% of GDP is spent on healthcare services. This variable is measured from the World Bank's data set on global healthcare expenditures by country. The outcome variable is life expectancy, which if it were to be coded = 65, then the average individual in the given country would live 65 years. This variable is measured by the World Health Organization's data set on life expectancy by country, 1960-2020. If I observe higher life expectancy as the percentage spent on healthcare increases, then it would support my hypothesis. If I observe lower life expectancy as the percentage spent on healthcare decreases, then it would not support my hypothesis. Furthermore, it would also not support my hypothesis if there were to be no relationship between the two variables. When I run my regression on the countries' healthcare spending and life expectancy, and I receive a positive, significant coefficient, then this would indicate support for my hypothesis.  
 
+## Data visualization
+
+```{r}
+install.packages("readxl", repos = "http://cran.us.r-project.org")
+library("readxl")
+GHED <- read_excel("GHED_data.xlsx")
+GLE <- read.csv("global life expectancy dataset.csv")
+```
+
+```{r}
+library(dplyr)
+library(tidyverse)
+
+# rename categories in GLE
+names(GLE) <- sub('^X', '', names(GLE))
+colnames(GLE)[1] = "country"
+colnames(GLE)[2] = "code"
+
+
+# pivot GLE longer to have a life expectancy column
+GLE <- GLE |>
+  pivot_longer(
+    cols = `2000`:`2020`,
+    names_to = "year",
+    values_to = "lifeExp"
+  )
+
+GLE <- GLE |>
+  mutate(year = as.numeric(year))
+
+# Removing columns 1960-1999
+GLE <- GLE[, -3:-42]
+  
+  
+# Merging datasets
+merged_df <- GHED |>
+  left_join(GLE, by = c("code", "year"))
+
+# Eliminating unnecessary data
+merged_df <- merged_df[,-36:-3221]
+```
+
+```{r}
+# Data visualization: Creating a scatter plot of country's health expenditures and life expectancy in 2000. 
+
+library(tidyverse)
+CHE_LifeExp <- merged_df |>
+  filter(merged_df$year == '2000') |>
+  ggplot(mapping = aes(x = che_pc_usd, y = lifeExp)) + 
+  geom_point() +
+  geom_smooth() +
+  labs(x = "Healthcare Spending per capita (USD$)", y = "Life Expectancy (years)", title = "Does healthcare spending have an effect on life expectancy (2000)")
+CHE_LifeExp
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
