@@ -65,17 +65,53 @@ merged_df <- merged_df[,-36:-3221]
 # Data visualization: Creating a scatter plot of country's health expenditures and life expectancy in 2000. 
 
 library(tidyverse)
+library(ggplot2)
 CHE_LifeExp <- merged_df |>
   filter(merged_df$year == '2000') |>
-  ggplot(mapping = aes(x = che_pc_usd, y = lifeExp)) + 
-  geom_point() +
-  geom_smooth() +
-  labs(x = "Healthcare Spending per capita (USD$)", y = "Life Expectancy (years)", title = "Does healthcare spending have an effect on life expectancy (2000)")
+  ggplot(mapping = aes(x = log(che_pc_usd), y = lifeExp)) + 
+  geom_point(aes(color = income)) +
+  geom_smooth(method = "lm") +
+  labs(x = "Healthcare Spending per capita (USD$)", y = "Life Expectancy (years)", title = "Does healthcare spending affect life expectancy? (2000)")
 CHE_LifeExp
 ```
 
+## Initial Analysis
 
+When answering the question of how healthcare spending may affect life expectancy, I started by first observing the relationship between healthcare spending per capita in USD and life expectancy in years. After creating a visualization, it was difficult to describe a linear relationship and consequently scaled the healthcare spending per capita to a natural logarithm. It initially seemed pretty clear that there was a positive association: as healthcare spending per capita increased, so did life expectancy. I tested the strength of this relationship by calculating the correlation coefficient (r-value):
 
+```{r}
+# Calculating the correlation coefficient (r-value)
+CHE_rvalue <- cor(merged_df$year, merged_df$che_pc_usd, use = "complete.obs")
+CHE_rvalue
+# Calculating the determination coefficient (square of r-value)
+(CHE_rvalue)^2
+```
+R values closer to 1 would mean more data points fall upon the fitted line, while a value closer to 0 would show less correlation. Although this in itself demonstrates weak correlation, the coefficient of determination (square of the r-value) may be more indicative. 
+The determination coefficient means that a percentage variation in the y variable can be explained by the x variable. In this context, 2.6% of the variation in life expectancy can be explained by the current level of healthcare spending per capita. This demonstrates a weak correlation between healthcare spending and life expectancy. Furthermore, there is a potentially confounding variable: the level of income. The scatter plot was color coded by the level of income each country has (e.g, low, high, etc.) and it can be distinctly observed that each income group was naturally formed into tight clumps respect to healthcare spending (e.g, high income countries were closely grouped on the higher end of spending). This does not take into account the value of the dollar in each country. In order to mitigate this potential confounder, I changed the measurement of healthcare spending from per capita in USD to percentage of GDP, which made the following graph:
+
+```{r}
+library(tidyverse)
+`CHE(GDP)_LifeExp` <- merged_df |>
+  filter(merged_df$year == '2000') |>
+  ggplot(mapping = aes(x = che_gdp, y = lifeExp)) + 
+  geom_point(aes(color = income)) +
+  geom_smooth(method = "lm") +
+  labs(x = "Healthcare Spending as % of GDP", y = "Life Expectancy (years)", title = "Does healthcare spending affect life expectancy? (2000)")
+`CHE(GDP)_LifeExp`
+```
+
+## Further Analysis
+It is noticeably different, with most countries regardless of income having roughly similar percentages of GDP dedicated to healthcare spending. First, it is helpful to compute the new coefficient of correlation:
+
+```{r}
+# Calculating the correlation coefficient
+GDP_rvalue <- cor(merged_df$year, merged_df$che_gdp, use = "complete.obs")
+GDP_rvalue
+
+# Calculating the determination coefficient
+(GDP_rvalue)^2
+```
+We observe that the correlation coefficient has decreased by approximately 0.047, or a 29% decrease compared to the previous coefficient. We also notice that when we square this value, we find that the coefficient of determination is roughly 0.013. This is a marked decrease from the previous value; now, only 1.3% of variation in life expectancy can be explained by healthcare spending as a % of GDP. Admittedly, this model is not entirely perfect for determining the relationship between healthcare spending and life expectancy. Instead of measuring healthcare spending as a percentage of GDP, it may be more sensible to measure it adjusted accordingly to purchasing power parity (PPP). In that case, the value of the dollar may have an effect on healthcare spending, and may change the strength of the relationship. However, at the current point in this research, it appears that there is a very weak correlation between healthcare spending and life expectancy, and it would be worth exploring other contributing factors to life expectancy.
 
 
 

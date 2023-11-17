@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["GHED_data.XLSX","GLE_data.xls","global life expectancy dataset.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["GHED_data.XLSX","GLE_data.xls","global life expectancy dataset.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/figure-html5/unnamed-chunk-6-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1529,7 +1529,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <pre><code>
 The downloaded binary packages are in
-    /var/folders/fm/zk1jh5qx1j9grtm11fmvnj2r0000gn/T//RtmpL0W7ew/downloaded_packages</code></pre>
+    /var/folders/fm/zk1jh5qx1j9grtm11fmvnj2r0000gn/T//RtmpNDc2SP/downloaded_packages</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://readxl.tidyverse.org'>"readxl"</a></span><span class='op'>)</span></span>
 <span><span class='va'>GHED</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></span><span class='op'>(</span><span class='st'>"GHED_data.xlsx"</span><span class='op'>)</span></span>
@@ -1575,17 +1575,64 @@ The downloaded binary packages are in
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Data visualization: Creating a scatter plot of country's health expenditures and life expectancy in 2000. </span></span>
 <span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span>
 <span><span class='va'>CHE_LifeExp</span> <span class='op'>&lt;-</span> <span class='va'>merged_df</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>merged_df</span><span class='op'>$</span><span class='va'>year</span> <span class='op'>==</span> <span class='st'>'2000'</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>che_pc_usd</span>, y <span class='op'>=</span> <span class='va'>lifeExp</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> </span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Healthcare Spending per capita (USD$)"</span>, y <span class='op'>=</span> <span class='st'>"Life Expectancy (years)"</span>, title <span class='op'>=</span> <span class='st'>"Does healthcare spending have an effect on life expectancy (2000)"</span><span class='op'>)</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>che_pc_usd</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='va'>lifeExp</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='va'>income</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Healthcare Spending per capita (USD$)"</span>, y <span class='op'>=</span> <span class='st'>"Life Expectancy (years)"</span>, title <span class='op'>=</span> <span class='st'>"Does healthcare spending affect life expectancy? (2000)"</span><span class='op'>)</span></span>
 <span><span class='va'>CHE_LifeExp</span></span></code></pre>
 </div>
 <p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
 </div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h2 id="initial-analysis">Initial Analysis</h2>
+<p>When answering the question of how healthcare spending may affect life expectancy, I started by first observing the relationship between healthcare spending per capita in USD and life expectancy in years. After creating a visualization, it was difficult to describe a linear relationship and consequently scaled the healthcare spending per capita to a natural logarithm. It initially seemed pretty clear that there was a positive association: as healthcare spending per capita increased, so did life expectancy. I tested the strength of this relationship by calculating the correlation coefficient (r-value):</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Calculating the correlation coefficient (r-value)</span></span>
+<span><span class='va'>CHE_rvalue</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>merged_df</span><span class='op'>$</span><span class='va'>year</span>, <span class='va'>merged_df</span><span class='op'>$</span><span class='va'>che_pc_usd</span>, use <span class='op'>=</span> <span class='st'>"complete.obs"</span><span class='op'>)</span></span>
+<span><span class='va'>CHE_rvalue</span></span></code></pre>
+</div>
+<pre><code>[1] 0.1611475</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Calculating the determination coefficient (square of r-value)</span></span>
+<span><span class='op'>(</span><span class='va'>CHE_rvalue</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span></span></code></pre>
+</div>
+<pre><code>[1] 0.02596851</code></pre>
+</div>
+<p>R values closer to 1 would mean more data points fall upon the fitted line, while a value closer to 0 would show less correlation. Although this in itself demonstrates weak correlation, the coefficient of determination (square of the r-value) may be more indicative.
+The determination coefficient means that a percentage variation in the y variable can be explained by the x variable. In this context, 2.6% of the variation in life expectancy can be explained by the current level of healthcare spending per capita. This demonstrates a weak correlation between healthcare spending and life expectancy. Furthermore, there is a potentially confounding variable: the level of income. The scatter plot was color coded by the level of income each country has (e.g, low, high, etc.) and it can be distinctly observed that each income group was naturally formed into tight clumps respect to healthcare spending (e.g, high income countries were closely grouped on the higher end of spending). This does not take into account the value of the dollar in each country. In order to mitigate this potential confounder, I changed the measurement of healthcare spending from per capita in USD to percentage of GDP, which made the following graph:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span><span class='va'>`CHE(GDP)_LifeExp`</span> <span class='op'>&lt;-</span> <span class='va'>merged_df</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>merged_df</span><span class='op'>$</span><span class='va'>year</span> <span class='op'>==</span> <span class='st'>'2000'</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>che_gdp</span>, y <span class='op'>=</span> <span class='va'>lifeExp</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='va'>income</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Healthcare Spending as % of GDP"</span>, y <span class='op'>=</span> <span class='st'>"Life Expectancy (years)"</span>, title <span class='op'>=</span> <span class='st'>"Does healthcare spending affect life expectancy? (2000)"</span><span class='op'>)</span></span>
+<span><span class='va'>`CHE(GDP)_LifeExp`</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
+</div>
+<h2 id="further-analysis">Further Analysis</h2>
+<p>It is noticeably different, with most countries regardless of income having roughly similar percentages of GDP dedicated to healthcare spending. First, it is helpful to compute the new coefficient of correlation:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Calculating the correlation coefficient</span></span>
+<span><span class='va'>GDP_rvalue</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>merged_df</span><span class='op'>$</span><span class='va'>year</span>, <span class='va'>merged_df</span><span class='op'>$</span><span class='va'>che_gdp</span>, use <span class='op'>=</span> <span class='st'>"complete.obs"</span><span class='op'>)</span></span>
+<span><span class='va'>GDP_rvalue</span></span></code></pre>
+</div>
+<pre><code>[1] 0.113793</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Calculating the determination coefficient</span></span>
+<span><span class='op'>(</span><span class='va'>GDP_rvalue</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span></span></code></pre>
+</div>
+<pre><code>[1] 0.01294885</code></pre>
+</div>
+<p>We observe that the correlation coefficient has decreased by approximately 0.047, or a 29% decrease compared to the previous coefficient. We also notice that when we square this value, we find that the coefficient of determination is roughly 0.013. This is a marked decrease from the previous value; now, only 1.3% of variation in life expectancy can be explained by healthcare spending as a % of GDP. Admittedly, this model is not entirely perfect for determining the relationship between healthcare spending and life expectancy. Instead of measuring healthcare spending as a percentage of GDP, it may be more sensible to measure it adjusted accordingly to purchasing power parity (PPP). In that case, the value of the dollar may have an effect on healthcare spending, and may change the strength of the relationship. However, at the current point in this research, it appears that there is a very weak correlation between healthcare spending and life expectancy, and it would be worth exploring other contributing factors to life expectancy.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
