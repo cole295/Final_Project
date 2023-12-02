@@ -1,7 +1,7 @@
 ---
 title: "Gov 50 Final Project"
 author: Cole Cochrane
-description: "My final project"
+description: "Healthcare spending and its effects on life expectancy"
 output:
   distill::distill_article:
     self_contained: false
