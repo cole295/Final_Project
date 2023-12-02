@@ -9,15 +9,15 @@ output:
 
 
 
-## Project thoughts
+## Initial Project Thoughts
 
 I am interested in exploring data related to the impact on the standard of living from the level of social safety net spending. As the United States sees bigger calls for increased healthcare, social security and other spending on social safety net programs, it would be intriguing to explore the degree to which standards of living are affected by such investments.
 
-## Finding data and writing a proposal
+## Proposal: Does healthcare spending affect life expectancy?
 
 Does the level of healthcare spending in a country affect public health? In this study, I plan on examining the relationship between the level of healthcare spending in countries (key independent variable), and their respective life expectancy (key dependent variable). I hypothesize that the greater the percentage of GDP is spent on healthcare, the life expectancy would be higher. I suspect that with higher levels of healthcare spending, there is greater spending on healthcare infrastructure and operations, which would mean increased services for patients. Consequently, as patients enjoy a higher quality healthcare through larger investments, health problems would decline and would subsequently be reflected in life expectancy. My sample includes measures of healthcare spending from all countries between the years 2000 and 2020, as well as an additional sample on life expectancy by country in the same time period. The explanatory variable of interest is healthcare spending as a percentage of GDP, by country. If the variable were to be coded = 5.76, this means that 5.76% of GDP is spent on healthcare services. This variable is measured from the World Bank's data set on global healthcare expenditures by country. The outcome variable is life expectancy, which if it were to be coded = 65, then the average individual in the given country would live 65 years. This variable is measured by the World Health Organization's data set on life expectancy by country, 1960-2020. If I observe higher life expectancy as the percentage spent on healthcare increases, then it would support my hypothesis. If I observe lower life expectancy as the percentage spent on healthcare decreases, then it would not support my hypothesis. Furthermore, it would also not support my hypothesis if there were to be no relationship between the two variables. Ultimately, receiving a postive and significant coefficient of determination would support my hypothesis. I will construct a scatterplot for a given year and run a linear regression to find the necessary variables.
 
-## Data visualization
+## Data Visualization
 
 ```{r}
 install.packages("readxl", repos = "http://cran.us.r-project.org")
