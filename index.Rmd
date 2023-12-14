@@ -60,22 +60,29 @@ merged_df <- merged_df[,-36:-3221]
 ```
 
 ```{r}
-# Data visualization: Creating a scatter plot of country's health expenditures and life expectancy in 2000. 
+# Narrowing to 2020 data
+merged_df |>
+  filter(year == 2020)
+```
+
+
+```{r}
+# Data visualization: Creating a scatter plot of country's health expenditures and life expectancy in 2020. 
 
 library(tidyverse)
 library(ggplot2)
 CHE_LifeExp <- merged_df |>
-  filter(merged_df$year == '2000') |>
+  filter(merged_df$year == '2020') |>
   ggplot(mapping = aes(x = log(che_pc_usd), y = lifeExp)) + 
   geom_point(aes(color = income)) +
   geom_smooth(method = "lm") +
-  labs(x = "Healthcare Spending per capita (USD$)", y = "Life Expectancy (years)", title = "Does healthcare spending affect life expectancy? (2000)")
+  labs(x = "Healthcare Spending per capita (USD): log scale", y = "Life Expectancy (years)", title = "Healthcare Spending & Life Expectancy Association (2020)")
 CHE_LifeExp
 ```
 
-## Initial Analysis
+## Analysis
 
-When answering the question of how healthcare spending may affect life expectancy, I started by first observing the relationship between healthcare spending per capita in USD and life expectancy in years. After creating a visualization, it was difficult to describe a linear relationship and consequently scaled the healthcare spending per capita to a natural logarithm. Thereafter, it  seemed pretty clear initially that there was a positive association: as healthcare spending per capita increased, so did life expectancy. I tested the strength of this relationship by calculating the regression and used the r-values for discernment:
+When answering the question of how healthcare spending may affect life expectancy, I started by first observing the relationship between healthcare spending per capita in USD and life expectancy in years. After creating a visualization, it was difficult to describe a linear relationship and consequently scaled the healthcare spending per capita to a natural logarithm. Thereafter, it  seemed pretty clear initially there was a positive association: as healthcare spending per capita increased, so did life expectancy. I tested the strength of this relationship by calculating the regression and used the r-values for discernment:
 
 ```{r}
 # Calculating the regression
@@ -86,22 +93,21 @@ modelsummary::modelsummary(fit,
                 "p = {p.value}"),
   gof_map = c("nobs", "r.squared", "adj.r.squared"))
 ```
-R values closer to 1 would mean more data points fall upon the fitted line, while a value closer to 0 would show less correlation. Although this in itself demonstrates weak correlation, the coefficient of determination (square of the r-value) may be more indicative. 
-The determination coefficient means that a percentage variation in the y variable can be explained by the x variable. In this context, 30.4% of the variation in life expectancy can be explained by the current level of healthcare spending per capita. This demonstrates a moderately weak correlation between healthcare spending and life expectancy. Furthermore, in this particular visualization, there is a potentially confounding variable: the level of income. The scatter plot was color coded by the level of income each country has (e.g, low, high, etc.) and it can be distinctly observed that each income group was naturally formed into tight clumps respect to healthcare spending (e.g, high income countries were closely grouped on the higher end of spending). This does not take into account the value of the dollar in each country. In order to mitigate this potential confounder, I changed the measurement of healthcare spending from per capita in USD to percentage of GDP, which made the following graph:
+R values closer to 1 would mean more data points fall upon the fitted line, while a value closer to 0 would show less correlation. Therefore, the coefficient of determination (square of the r-value) may be indicative of a relationship.
+
+The determination coefficient means that a percentage variation in the y variable can be explained by the x variable. In this context, 30.4% of the variation in life expectancy can be explained by the current level of healthcare spending per capita. This demonstrates a modest strength in correlation between healthcare spending and life expectancy. However, in this particular visualization, there is a potentially confounding variable: value of the dollar in a given country. The value of a doctor or a hospital bed varies between a high-income and a low-income country. As such, showing proportional contributions of spending on healthcare may have an effect on the correlation, so changing the variable to healthcare spending as a percentage of GDP might increase accuracy:
 
 ```{r}
 library(tidyverse)
 `CHE(GDP)_LifeExp` <- merged_df |>
-  filter(merged_df$year == '2000') |>
+  filter(merged_df$year == '2020') |>
   ggplot(mapping = aes(x = che_gdp, y = lifeExp)) + 
   geom_point(aes(color = income)) +
   geom_smooth(method = "lm") +
-  labs(x = "Healthcare Spending as % of GDP", y = "Life Expectancy (years)", title = "Does healthcare spending affect life expectancy? (2000)")
+  labs(x = "Healthcare Spending as % of GDP", y = "Life Expectancy (years)", title = "Healthcare Spending & Life Expectancy Association (2020)")
 `CHE(GDP)_LifeExp`
 ```
-
-## Further Analysis
-It is noticeably different, with most countries regardless of income having roughly similar percentages of GDP dedicated to healthcare spending. First, it is helpful to compute the new regression:
+It is noticeably different from the previous scatter plot, with most countries regardless of income having roughly similar percentages of GDP dedicated to healthcare spending. First, it is helpful to compute the new regression:
 
 ```{r}
 # Calculating the regression
@@ -115,7 +121,7 @@ We observe that the coefficient of determination has decreased significantly fro
 
 # Conclusion
 
-Overall, it is evident there is not a strong enough correlation to determine causality between the level of healthcare spending and life expectancy. Admittedly, there are some constraints given the current model. The intrinsic value of goods and services fluctuates in a given country; for example, a doctor's salary in Pakistan is lower than one in the United States. In other words, adjusting the level of healthcare spending according to purchasing power parity (PPP) may improve the accuracy of the model and affect the strength of the relationship. Besides that, there are numerous confounding variables to consider in life expectancy that dilutes any potency in a conclusion on this relationship. Variables may include geopolitical conflicts, differing kinds of funding mechanisms for healthcare systems, equity issues and so forth. Nevertheless, at the current point in this research, it appears that there is a relatively weak correlation between healthcare spending and life expectancy, which rejects my original hypothesis of a causal relationship between the two variables. 
+Overall, it is evident there is not a strong enough correlation to determine causality between the level of healthcare spending and life expectancy. Admittedly, there are some constraints given the current model. First, the variable of healthcare spending as a percentage of GDP is not necessarily an effective metric of the intrinsic value of goods and services in a given country; in this case, purchasing power parity is a better alternative. Adjusting the level of healthcare spending according to purchasing power parity (PPP) may improve the accuracy of the model and affect the strength of the relationship. Unfortunately, given the time constraints and lack of readily available data around PPP adjusted healthcare spending, this could not be used in the second visualization. Second, there are multiple contributing factors to the variation in life expectancy. Economic inequality, the natural environment, and geopolitical conflicts are some examples of contributing factors. Therefore, given the numerous factors involved, we can not be entirely sure what would be a significant level of correlation to infer causality. Nevertheless, at the current point in this research, it appears there is a relatively weak correlation between healthcare spending and life expectancy, which rejects my original hypothesis of a causal relationship between the two variables. 
 
 
 
