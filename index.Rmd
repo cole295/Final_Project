@@ -15,7 +15,7 @@ I am interested in exploring data related to the impact on the standard of livin
 
 ## Proposal: Does healthcare spending affect life expectancy?
 
-Does the level of healthcare spending in a country affect public health? In this study, I plan on examining the relationship between the level of healthcare spending in countries (key independent variable), and their respective life expectancy (key dependent variable). I hypothesize that the greater the percentage of GDP is spent on healthcare, the life expectancy would be higher. I suspect that with higher levels of healthcare spending, there is greater spending on healthcare infrastructure and operations, which would mean increased services for patients. Consequently, as patients enjoy a higher quality healthcare through larger investments, health problems would decline and would subsequently be reflected in life expectancy. My sample includes measures of healthcare spending from all countries between the years 2000 and 2020, as well as an additional sample on life expectancy by country in the same time period. The explanatory variable of interest is healthcare spending as a percentage of GDP, by country. If the variable were to be coded = 5.76, this means that 5.76% of GDP is spent on healthcare services. This variable is measured from the World Bank's data set on global healthcare expenditures by country. The outcome variable is life expectancy, which if it were to be coded = 65, then the average individual in the given country would live 65 years. This variable is measured by the World Health Organization's data set on life expectancy by country, 1960-2020. If I observe higher life expectancy as the percentage spent on healthcare increases, then it would support my hypothesis. If I observe lower life expectancy as the percentage spent on healthcare decreases, then it would not support my hypothesis. Furthermore, it would also not support my hypothesis if there were to be no relationship between the two variables. Ultimately, receiving a postive and significant coefficient of determination would support my hypothesis. I will construct a scatterplot for a given year and run a linear regression to find the necessary variables.
+In this study, I plan on examining the relationship between the level of healthcare spending in countries (key independent variable), and their respective life expectancy (key dependent variable). I hypothesize that the greater the contribution towards healthcare, the life expectancy would then be higher. I suspect that with higher levels of healthcare spending, there is greater spending on healthcare infrastructure and operations, which would mean increased services for patients. Consequently, as patients enjoy a higher quality healthcare through larger investments, health problems would decline and would subsequently be reflected in life expectancy. The sample includes measures of healthcare spending from all countries between the years 2000 and 2020, as well as an additional sample merged into the data set with respect to life expectancy by country in the same time period. The explanatory variable of interest is healthcare spending as a percentage of GDP, by country. If the variable were to be coded = 5.76, this means that 5.76% of GDP is spent on healthcare services. This variable is measured from the World Bank's data set on global healthcare expenditures by country. The outcome variable is life expectancy, which if it were to be coded = 65, then the average individual in the given country would live 65 years. This variable is measured by the World Health Organization's data set on life expectancy by country, 1960-2020. If I observe higher life expectancy as the percentage spent on healthcare increases, then it would support my hypothesis. If I observe lower life expectancy as the percentage spent on healthcare decreases, then it would not support my hypothesis. Furthermore, it would also not support my hypothesis if there were to be no relationship between the two variables. Ultimately, receiving a postive and significant coefficient of determination would support my hypothesis. I will construct a scatterplot for a given year and run a linear regression to find the necessary variables.
 
 ## Data Visualization
 
@@ -80,13 +80,15 @@ CHE_LifeExp <- merged_df |>
 CHE_LifeExp
 ```
 
+This visualization has an observably positive direction, which is emphasized with the fitted line. It is very distinct that there is significant segregation by the level of income a country earns, with the low-income countries naturally being on the lower end, while high-income countries reside on the upper end. There is a lot more range in terms of life expectancy for lower-middle and low-income countries, compared to the higher income countries which are more tightly surrounding the fitted line. 
+
 ## Analysis
 
 When answering the question of how healthcare spending may affect life expectancy, I started by first observing the relationship between healthcare spending per capita in USD and life expectancy in years. After creating a visualization, it was difficult to describe a linear relationship and consequently scaled the healthcare spending per capita to a natural logarithm. Thereafter, it  seemed pretty clear initially there was a positive association: as healthcare spending per capita increased, so did life expectancy. I tested the strength of this relationship by calculating the regression and used the r-values for discernment:
 
 ```{r}
 # Calculating the regression
-install.packages("modelsummary")
+library(modelsummary)
 fit <- lm(formula = che_pc_usd ~ lifeExp, data = merged_df)
 modelsummary::modelsummary(fit,
   statistic = c("s.e = {std.error}",
@@ -107,6 +109,8 @@ library(tidyverse)
   labs(x = "Healthcare Spending as % of GDP", y = "Life Expectancy (years)", title = "Healthcare Spending & Life Expectancy Association (2020)")
 `CHE(GDP)_LifeExp`
 ```
+[NOTE ON VISUALIZATION: The points are not as clearly positive as the first visualization. The level of income have had an observably minimal effect, and most countries are relatively within the range of 2.5% to 12.5% of GDP spent on healthcare. Despite where proportions of healthcare spending may lie, countries are still segregated on level of income in terms of life expectancy with high-income with the higher life expectancy averages.]   
+
 It is noticeably different from the previous scatter plot, with most countries regardless of income having roughly similar percentages of GDP dedicated to healthcare spending. First, it is helpful to compute the new regression:
 
 ```{r}
